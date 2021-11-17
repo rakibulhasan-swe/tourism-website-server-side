@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-const port = 4000 || process.env.PORT;
+const port = process.env.PORT || 4000;
 require("dotenv").config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,7 +31,7 @@ MongoClient.connect(uri, function (err, client) {
     db.collection("order")
       .deleteOne({ _id: ObjectId(id) })
       .then((result) => {
-        // res.send(result);
+        res.send(result);
       })
       .catch((err) => console.log(err));
     res.send("delect");
@@ -60,9 +60,9 @@ MongoClient.connect(uri, function (err, client) {
     db.collection("order")
       .insertOne(data)
       .then(function (result) {
-        console.log(result);
-      });
-    res.send(true);
+        res.send(result);
+      })
+      .catch((err) => console.log(err));
   });
 
   //services router
